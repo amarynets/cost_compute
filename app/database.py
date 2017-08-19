@@ -26,3 +26,11 @@ class Database:
             return self.cursor.lastrowid
         except Exception as e:
             print(e)
+
+    def insert_many(self, query, param):
+        try:
+            self.cursor.executemany(query, param)
+            self.conn.commit()
+            return self.cursor.lastrowid
+        except Exception as e:
+            print(e)
