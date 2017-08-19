@@ -1,8 +1,13 @@
 from collections import namedtuple
 
-Cost = namedtuple('Cost', 'current, in_db')
 Resource = namedtuple('Resource', 'id, name')
 Item = namedtuple('Item', 'id, resource, cost')
+
+
+class Cost:
+    def __init__(self, current, in_db):
+        self.current = current
+        self.in_db = in_db
 
 
 class Buffer:
@@ -28,7 +33,7 @@ class Buffer:
 
     def _update(self, item, cost):
         item.cost.current += cost
-        self.buffer[item.name] = item
+        self.buffer[item.id + item.resource.name] = item
 
     def _split(self, text):
         return text.split(':')[1:]
