@@ -18,10 +18,13 @@ class Buffer:
             if record:
                 pass
             else:
-                self._create(i + j.name, j, cost)
+                self._create(i + j.name, j, Cost(cost, 0))
+
+    def get(self, name):
+        return self.buffer.get(name)
 
     def _create(self, name, resource, cost):
-        self.buffer[name] = Item(name, resource, Cost(cost, 0))
+        self.buffer[name] = Item(name, resource, cost)
 
     def _update(self, item, cost):
         item.cost.current += cost
