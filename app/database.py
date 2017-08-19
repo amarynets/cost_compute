@@ -9,3 +9,6 @@ class Database:
 
     def __del__(self):
         self.conn.close()
+
+    def create_table(self, sql):
+        self.cursor.execute(sql)
