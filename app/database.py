@@ -18,3 +18,11 @@ class Database:
             self.cursor.execute(query)
         except Exception as e:
             print(e)
+
+    def insert(self, query, param):
+        try:
+            self.cursor.execute(query, param)
+            self.conn.commit()
+            return self.cursor.lastrowid
+        except Exception as e:
+            print(e)
