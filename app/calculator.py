@@ -20,3 +20,9 @@ class Buffer:
             else:
                 self._create(i + j.name, j, cost)
 
+    def _create(self, name, resource, cost):
+        self.buffer[name] = Item(name, resource, Cost(cost, 0))
+
+    def _update(self, item, cost):
+        item.cost.current += cost
+        self.buffer[item.name] = item
