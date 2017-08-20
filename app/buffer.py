@@ -19,6 +19,9 @@ class Buffer:
         self.buffer = dict()
         self.resource = [Resource(i, j) for i, j in enumerate(['env', 'farm', 'farm_role', 'server'])]
 
+    def __len__(self):
+        return len(self.buffer)
+
     def add(self, item):
         items = self._split(item['user:scalr-meta'])
         cost = item['Cost']

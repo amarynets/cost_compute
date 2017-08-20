@@ -28,6 +28,7 @@ for i in reader.get_data(f):
 
 print(buf.get('server'))
 
-for i in
+for i in buf.get_buffer(len(buf) // 4):
+    writer.write(i)
 
 print(getsizeof(buf.buffer))
