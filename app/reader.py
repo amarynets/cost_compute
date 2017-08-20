@@ -17,6 +17,7 @@ class Reader:
         :return: next item from file that should be build
         '''
         with open(name, 'r') as csvfile:
+            print('Reading data from {}'.format(name))
             reader = csv.DictReader(csvfile)
             for i in reader:
                 if criterion(i):
@@ -33,6 +34,8 @@ class Scanner:
     def __init__(self, path):
         self.path = path
         self.files = list()
+        self.build_file_list()
+        print('Directory is scanned')
 
     def build_file_list(self):
         if os.path.isfile(self.path):
