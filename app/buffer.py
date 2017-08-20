@@ -10,6 +10,9 @@ class Item:
         self.resource = resource
         self.cost = cost
 
+    def __str__(self):
+        return self.__dict__
+
 
 class Buffer:
     def __init__(self):
