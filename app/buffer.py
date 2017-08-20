@@ -28,6 +28,9 @@ class Buffer:
     def get(self, name):
         return self.buffer.get(name)
 
+    def get_buffer(self):
+        return self.buffer
+
     def _create(self, name, resource, cost):
         self.buffer[name + resource.name] = Item(name, resource, cost)
 
@@ -37,3 +40,6 @@ class Buffer:
 
     def _split(self, text):
         return text.split(':')[1:]
+
+    def _serialize(self, item):
+        return (item.resource.id, item.id, item.cost.current)

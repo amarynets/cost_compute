@@ -24,3 +24,7 @@ class BufferTestCase(unittest.TestCase):
         self.buffer._create(in_buffer.id, in_buffer.resource, in_buffer.cost)
         self.buffer._update(in_buffer, 0.005)
         self.assertEqual(self.buffer.get('3411env').cost.current, 0.0095, 'Items is difference')
+
+    def test_serialize_item(self):
+        in_buffer = Item('3411', Resource(0, 'env'), Cost(0.0045, 0))
+        self.assertEqual(self.buffer._serialize(in_buffer), (0, '3411', 0.0045), 'Serialize is bad')
