@@ -2,13 +2,13 @@ from collections import namedtuple
 from itertools import islice
 
 Resource = namedtuple('Resource', 'id, name')
-Item = namedtuple('Item', 'id, resource, cost')
 
 
-class Cost:
-    def __init__(self, current, in_db):
-        self.current = current
-        self.in_db = in_db
+class Item:
+    def __init__(self, id, resource, cost):
+        self.id = id
+        self.resource = resource
+        self.cost = cost
 
 
 class Buffer:
@@ -22,9 +22,9 @@ class Buffer:
         for i, j in zip(items, self.resource):
             record = self.buffer.get(i + j.name)
             if record:
-                pass
+                self._update(i, cost)
             else:
-                self._create(i, j, Cost(cost, 0))
+                self._create(i, j, cost)
 
     def get(self, name):
         return self.buffer.get(name)
@@ -40,11 +40,11 @@ class Buffer:
         self.buffer[name + resource.name] = Item(name, resource, cost)
 
     def _update(self, item, cost):
-        item.cost.current += cost
+        item.cost += cost
         self.buffer[item.id + item.resource.name] = item
 
     def _split(self, text):
         return text.split(':')[1:]
 
     def _serialize(self, item):
-        return (item.resource.id, item.id, item.cost.current)
+        return (item.resource.id, item.id, item.cost)

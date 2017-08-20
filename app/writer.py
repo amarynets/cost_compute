@@ -10,6 +10,6 @@ class Writer:
                                     (item))
             else:
                 return self.db.insert('''INSERT INTO cost(object_type, object_id, cost) VALUES(?, ?, ?)''',
-                                      (item.resource.id, item.id, item.cost.current))
+                                      (item.resource.id, item.id, item.cost))
         except Exception as e:
             print(e)
