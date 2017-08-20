@@ -1,4 +1,5 @@
 from collections import namedtuple
+from itertools import islice
 
 Resource = namedtuple('Resource', 'id, name')
 Item = namedtuple('Item', 'id, resource, cost')
@@ -28,8 +29,12 @@ class Buffer:
     def get(self, name):
         return self.buffer.get(name)
 
-    def get_buffer(self):
-        return self.buffer
+    def get_buffer(self, step):
+        items = (self._serialize(i) for i in self.buffer.values())
+        part = list(islice(items, step))
+        while part:
+            yield part
+            part = list(islice(items, step))
 
     def _create(self, name, resource, cost):
         self.buffer[name + resource.name] = Item(name, resource, cost)
