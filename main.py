@@ -12,21 +12,22 @@ db.insert_many(INSERT_ENUM_DATA, ENUM_DATA)
 
 def f(row):
     meta = row['user:scalr-meta']
-    meta = meta.split(':')[1:]
+    meta = meta.split(':')
+    if meta[0] != 'v1':
+        return False
     count = 0
-    for i in meta:
+    for i in meta[1:]:
         if len(i) > 0:
             count += 1
     return True if count == 4 else False
-reader = Reader(Scanner('/home/andrii/study/tt/cost_compute').get_files())
+reader = Reader(Scanner('/home/andrii/study/tt').get_files())
 buf = Buffer()
 writer = Writer(db)
 for i in reader.get_data(f):
     buf.add(i)
 
-print(buf.get('1farm'))
+print(buf.get('server'))
 
-for i in buf.get_buffer(100):
-    writer.write(i)
+for i in
 
 print(getsizeof(buf.buffer))
