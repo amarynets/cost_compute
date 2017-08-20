@@ -1,5 +1,5 @@
 import csv
-
+import os
 
 class Reader:
     '''
@@ -21,3 +21,24 @@ class Reader:
                     yield i
                 else:
                     continue
+
+
+class Scanner:
+    def __init__(self, path):
+        self.path = path
+        self.files = list()
+
+    def build_file_list(self):
+        if os.path.isfile(self.path):
+            self.files.append(self.path)
+        else:
+            self.scan_dir()
+
+    def scan_dir(self):
+        for root, dirs, files in os.walk(self.path):
+            for file in files:
+                if file.endswith('.csv'):
+                    self.files.append(os.path.join(root, file))
+
+    def get_files(self):
+        return self.files
