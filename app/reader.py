@@ -1,6 +1,7 @@
 import csv
 import os
 
+
 class Reader:
     '''
     Class for return single row from file each time
