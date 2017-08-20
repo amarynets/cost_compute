@@ -2,6 +2,9 @@ import csv
 
 
 class Reader:
+    '''
+    Class for return single row from file each time
+    '''
     def __init__(self, filename):
         self.name = filename
 
