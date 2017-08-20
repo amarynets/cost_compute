@@ -1,6 +1,6 @@
-from app import Database, Reader
+from sys import getsizeof
 
-
+from app import Database, Reader, Buffer, Writer
 from const import *
 
 db = Database('scalr.db')
@@ -18,7 +18,12 @@ def f(row):
     else:
         return False
 count = 0
+buf = Buffer()
+writer = Writer(db)
 for i in reader.get_data(f):
-    count += 1
-    print(i)
-print(count)
+    buf.add(i)
+
+for i in buf.get_buffer(100):
+    writer.write(i)
+
+print(getsizeof(buf.buffer))
