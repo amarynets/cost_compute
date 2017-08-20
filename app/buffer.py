@@ -22,7 +22,7 @@ class Buffer:
         for i, j in zip(items, self.resource):
             record = self.buffer.get(i + j.name)
             if record:
-                self._update(i, cost)
+                self._update(record, cost)
             else:
                 self._create(i, j, cost)
 
@@ -37,10 +37,10 @@ class Buffer:
             part = list(islice(items, step))
 
     def _create(self, name, resource, cost):
-        self.buffer[name + resource.name] = Item(name, resource, cost)
+        self.buffer[name + resource.name] = Item(name, resource, float(cost))
 
     def _update(self, item, cost):
-        item.cost += cost
+        item.cost += float(cost)
         self.buffer[item.id + item.resource.name] = item
 
     def _split(self, text):
