@@ -1,5 +1,5 @@
 import os
-from sys import getsizeof
+from sys import getsizeof, argv
 
 from app import Database, Reader, Buffer, Writer, Scanner
 from const import *
@@ -20,15 +20,20 @@ def f(row):
         if len(i) > 0:
             count += 1
     return True if count == 4 else False
-reader = Reader(Scanner('/home/andrii/study/tt').get_files())
-buf = Buffer()
-writer = Writer(db)
-for i in reader.get_data(f):
-    buf.add(i)
 
-print(buf.get('server'))
 
-for i in buf.get_buffer(len(buf) // 4):
-    writer.write(i)
+def single_thread(path):
+    reader = Reader(Scanner(path).get_files())
+    buf = Buffer()
+    writer = Writer(db)
+    for i in reader.get_data(f):
+        buf.add(i)
 
-print(getsizeof(buf.buffer))
+    for i in buf.get_buffer(len(buf) // 4):
+        writer.write(i)
+
+    print(getsizeof(buf.buffer))
+
+if __name__ == '__main__':
+    path = argv[1]
+    single_thread(path)
