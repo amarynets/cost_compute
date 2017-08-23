@@ -26,8 +26,11 @@ class Reader:
                     continue
 
     def get_data(self, criterion):
-        for i in self.files:
-            yield from self.read(i, criterion)
+        if isinstance(self.files, list):
+            for i in self.files:
+                yield from self.read(i, criterion)
+        else:
+            yield from self.read(self.files, criterion)
 
 
 class Scanner:

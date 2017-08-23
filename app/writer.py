@@ -6,7 +6,7 @@ class Writer:
     def write(self, item):
         try:
             if isinstance(item, list):
-                self.db.insert_many('''INSERT INTO cost(object_type, object_id, cost) VALUES(?, ?, ?)''',
+                return self.db.insert_many('''INSERT INTO cost(object_type, object_id, cost) VALUES(?, ?, ?)''',
                                     (item))
             else:
                 return self.db.insert('''INSERT INTO cost(object_type, object_id, cost) VALUES(?, ?, ?)''',
