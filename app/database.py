@@ -29,7 +29,10 @@ class Database:
 
     def insert_many(self, query, param):
         try:
-            self.cursor.executemany(query, param)
+            for i, item in enumerate(param):
+                self.cursor.execute(query, item)
+                if i % 1000 == 0:
+                    self.conn.commit()
             self.conn.commit()
             return self.cursor.lastrowid
         except Exception as e:
