@@ -1,5 +1,4 @@
-from queue import Queue
-from threading import Thread
+from multiprocessing import Process, Queue
 from sys import getsizeof, argv
 import time
 
@@ -19,6 +18,7 @@ def time_duration(func):
         print('Duration', time.time() - start)
     return wraps
 
+
 def f(row):
     meta = row['user:scalr-meta']
     meta = meta.split(':')
@@ -35,17 +35,12 @@ def make_file_list(path):
     return Scanner(path).get_files()
 
 
-@time_duration
 def single_thread(files, queue=None):
     reader = Reader(files)
     buf = Buffer()
 
     for i in reader.get_data(f):
         buf.add(i)
-    # writer = Writer(db)
-    # for i in buf.get_buffer(len(buf) // 4):
-    #     d = writer.write(i)
-    #     print(d, 'LEN', len(i))
 
     print(getsizeof(buf.buffer))
     if queue:
@@ -54,19 +49,15 @@ def single_thread(files, queue=None):
 
 @time_duration
 def multi(files):
-    queue = Queue(len(files))
+    queue = Queue()
     print(files)
-    proc = [Thread(target=single_thread, args=(i, queue,)) for i in files]
-    for i in proc:
-        i.start()
+    process = [Process(target=single_thread, args=(i, queue)).start() for i in files]
 
-    for i in proc:
-        i.join()
-    #
-    # print(queue.empty())
-    # while not queue.empty():
-    #     for i in queue.get().get_buffer(19):
-    #         print(i)
+    writer = Writer(db)
+    for i in range(len(process)):
+        buffer = queue.get()
+        for j in buffer.get_buffer(len(buffer) // 4):
+            writer.write(j)
 
 
 if __name__ == '__main__':
