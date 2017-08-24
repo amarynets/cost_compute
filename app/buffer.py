@@ -13,6 +13,9 @@ class Item:
     def __str__(self):
         return self.__dict__
 
+    def serialize(self):
+        return (self.resource.id, self.id, self.cost)
+
 
 class Buffer:
     def __init__(self):
@@ -36,7 +39,7 @@ class Buffer:
         return self.buffer.get(name)
 
     def get_buffer(self, step):
-        items = (self._serialize(i) for i in self.buffer.values())
+        items = (i.serialize() for i in self.buffer.values())
         part = list(islice(items, step))
         while part:
             yield part
@@ -52,5 +55,3 @@ class Buffer:
     def _split(self, text):
         return text.split(':')[1:]
 
-    def _serialize(self, item):
-        return (item.resource.id, item.id, item.cost)
