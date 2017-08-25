@@ -16,7 +16,7 @@ class Writer:
             if len(insert):
                 self.insert(insert)
             if len(update):
-                pass
+                self.update(update)
         except Exception as e:
             print(e)
 
