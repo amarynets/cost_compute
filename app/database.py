@@ -19,7 +19,7 @@ class Database:
         except Exception as e:
             print(e)
 
-    def insert(self, query, param):
+    def run(self, query, param):
         try:
             self.cursor.execute(query, param)
             self.conn.commit()
@@ -27,7 +27,7 @@ class Database:
         except Exception as e:
             print(e)
 
-    def insert_many(self, query, param):
+    def run_many(self, query, param):
         try:
             for i, item in enumerate(param):
                 self.cursor.execute(query, item)
