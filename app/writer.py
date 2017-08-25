@@ -29,16 +29,16 @@ class Writer:
     def insert(self, item):
         try:
             if isinstance(item, list):
-                return self.db.insert_many('''INSERT INTO cost(object_type, object_id, cost) VALUES(?, ?, ?)''',
+                return self.db.run_many('''INSERT INTO cost(object_type, object_id, cost) VALUES(?, ?, ?)''',
                                     (item))
             else:
-                return self.db.insert('''INSERT INTO cost(object_type, object_id, cost) VALUES(?, ?, ?)''',
+                return self.db.run('''INSERT INTO cost(object_type, object_id, cost) VALUES(?, ?, ?)''',
                                       (item.resource.id, item.id, item.cost))
         except Exception as e:
             print(e)
 
     def update(self, item):
         try:
-            pass
+            self.db.run_many('''UPDATE cost SET cost = cost + ? WHERE object_type=? and object_id=?''', (item))
         except Exception as e:
             print(e)
