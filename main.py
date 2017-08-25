@@ -8,7 +8,7 @@ from const import *
 db = Database('scalr.db')
 db.create_table(CREATE_ENUM_TABLE)
 db.create_table(CREATE_COST_TABLE)
-db.insert_many(INSERT_ENUM_DATA, ENUM_DATA)
+db.run_many(INSERT_ENUM_DATA, ENUM_DATA)
 
 
 def time_duration(func):
