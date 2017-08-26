@@ -12,6 +12,7 @@ class Writer:
                 if self._is_in_db(i):
                     update.append((i[2], i[0], i[1]))
                 else:
+                    self.type[i[0]].append(i[1])
                     insert.append(i)
             if len(insert):
                 self.insert(insert)
