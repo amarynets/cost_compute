@@ -4,6 +4,11 @@ class Writer:
         self.db = database
         self.type = {k: list() for k in range(4)}
 
+        for i in range(4):
+            self.db.run('''SELECT object_id FROM cost WHERE object_type=?''', (i,))
+            data = self.db.cursor.fetchall()
+            self.type[i].extend((j[0] for j in data))
+
     def write(self, items):
         try:
             update = list()
@@ -22,7 +27,7 @@ class Writer:
             print(e)
 
     def _is_in_db(self, item):
-        if item[1] in self.type[0]:
+        if item[1] in self.type[item[0]]:
             return True
         else:
             return False
