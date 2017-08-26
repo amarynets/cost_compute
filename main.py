@@ -42,7 +42,6 @@ def single_thread(files, queue=None):
     for i in reader.get_data(f):
         buf.add(i)
 
-    print(getsizeof(buf.buffer))
     if queue:
         queue.put(buf)
 
@@ -57,6 +56,7 @@ def multi(files):
     for i in range(len(process)):
         buffer = queue.get()
         for j in buffer.get_buffer(len(buffer) // 4):
+            print('Writing to DB from buffer {}'.format(i))
             writer.write(j)
 
 
