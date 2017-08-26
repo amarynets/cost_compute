@@ -19,21 +19,31 @@ class Database:
         except Exception as e:
             print(e)
 
-    def run(self, query, param):
+    def run(self, query, param=None):
         try:
-            self.cursor.execute(query, param)
-            self.conn.commit()
-            return self.cursor.lastrowid
+            if param:
+                self.cursor.execute(query, param)
+                self.conn.commit()
+                return self.cursor.lastrowid
+            else:
+                self.cursor.execute(query)
+                self.conn.commit()
+                return self.cursor.lastrowid
+
         except Exception as e:
             print(e)
 
-    def run_many(self, query, param):
+    def run_many(self, query, param=None):
         try:
-            for i, item in enumerate(param):
-                self.cursor.execute(query, item)
-                if i % 1000 == 0:
-                    self.conn.commit()
-            self.conn.commit()
-            return self.cursor.lastrowid
+            if param:
+                for i, item in enumerate(param):
+                    self.cursor.execute(query, item)
+                    if i % 1000 == 0:
+                        self.conn.commit()
+                self.conn.commit()
+                return self.cursor.lastrowid
+            else:
+                self.cursor.execute(query)
+                self.conn.commit()
         except Exception as e:
             print(e)
