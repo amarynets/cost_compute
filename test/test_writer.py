@@ -20,6 +20,6 @@ class WriterTestCase(unittest.TestCase):
         item = self.buffer.get('32env')
         self.writer.write([item.serialize()])
         self.writer.write([item.serialize()])
-        self.writer.db.run('''SELECT object_type, object_id FROM cost WHERE object_type=0 and object_id='32' ''')
+        self.writer.db.run('''SELECT cost FROM cost WHERE object_type=0 and object_id='32' ''')
         in_db = self.writer.db.cursor.fetchall()
-        self.assertEqual(in_db, [(0, '32')])
+        self.assertEqual(in_db, [(0.02,)])
