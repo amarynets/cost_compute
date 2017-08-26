@@ -19,5 +19,5 @@ ENUM_DATA = [(0, 'env'), (1, 'farm'), (2, 'farm_role'), (3, 'server')]
 def create_db(db):
     db.create_table(CREATE_ENUM_TABLE)
     db.create_table(CREATE_COST_TABLE)
-    db.insert_many(INSERT_ENUM_DATA, (ENUM_DATA))
+    db.run_many(INSERT_ENUM_DATA, (ENUM_DATA))
     return db

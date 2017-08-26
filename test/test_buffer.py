@@ -27,4 +27,4 @@ class BufferTestCase(unittest.TestCase):
 
     def test_serialize_item(self):
         in_buffer = Item('3411', Resource(0, 'env'), 0.0045)
-        self.assertEqual(self.buffer._serialize(in_buffer), (0, '3411', 0.0045), 'Serialize is bad')
+        self.assertEqual(in_buffer.serialize(), (0, '3411', 0.0045), 'Serialize is bad')

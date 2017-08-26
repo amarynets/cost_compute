@@ -10,7 +10,7 @@ class Writer:
             insert = list()
             for i in items:
                 if self._is_in_db(i):
-                    update.append(i)
+                    update.append((i[2], i[0], i[1]))
                 else:
                     insert.append(i)
             if len(insert):

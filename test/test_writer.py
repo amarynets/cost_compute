@@ -12,11 +12,13 @@ class WriterTestCase(unittest.TestCase):
         self.buffer.add({'Cost': 0.0045, 'user:scalr-meta': 'v1:3414:16590:119073:6af64456-8d69-4427-9c2e-32a97fe50ae3'})
         self.buffer.add({'Cost': 0.01, 'user:scalr-meta': 'v1:32:3453:22342:34dfrg56-8d69-4427-9c2e-32a97fe50ae3'})
 
-    def test_first_write_to_db(self):
+    def test_write_to_db(self):
         item = self.buffer.get('32env')
-        last_id = self.writer.write(item)
-        self.assertTrue(isinstance(last_id, int), 'Not return int')
-        self.assertEqual(last_id, 1, 'DB not returned id')
-        item = self.buffer.get('3414env')
-        last_id = self.writer.write(item)
-        self.assertEqual(last_id, 2, 'DB not returned id')
+        self.writer.write(item)
+
+    def test_update_db(self):
+        item = self.buffer.get('32env')
+        self.writer.write(item)
+        self.writer.write(item)
+        self.writer.db.run('SELECT object_type, object_id FROM cost WHERE object_type=0 and object_id=32')
+        in_db = self.writer.db.cursor.fetchall()
